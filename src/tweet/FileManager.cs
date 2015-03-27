@@ -56,5 +56,4 @@ namespace TweetSenseApplication.src.tweet
         }
 
     }
-    }
 }
