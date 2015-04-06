@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TweetSenseApplication.src.tweet;
+using TweetSenseApplication.src.twitter;
+using TweetSenseApplication.src.fileMgr;
 
 namespace TweetSenseApplication
 {

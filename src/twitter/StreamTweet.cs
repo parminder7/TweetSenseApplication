@@ -17,7 +17,7 @@ using Tweetinvi.Core.Interfaces.oAuth;
 using System.Windows;
 using Timer = System.Timers.Timer;
 
-namespace TweetSenseApplication.src.tweet
+namespace TweetSenseApplication.src.twitter
 {
     class StreamTweet
     {

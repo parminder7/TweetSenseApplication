@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tweetinvi.Core.Interfaces;
 
-namespace TweetSenseApplication.src.tweet
+namespace TweetSenseApplication.src.twitter
 {
     class Tweet
     {
@@ -26,17 +26,17 @@ namespace TweetSenseApplication.src.tweet
         /// <summary>
         /// Create a new tweet from a Tweetinvi object
         /// </summary>
-        public Tweet(ITweet obj)
+        public Tweet(ITweet tobject)
         {
-            this.ID = obj.Id;
-            this.Text = obj.Text.Replace(",", "");
-            this.Time = obj.CreatedAt;
-            this.User = obj.Creator.Name;
-            //if (original.Coordinates != null)
-            //{
-            //    this.longitude = original.Coordinates.Longitude;
-            //    this.lattitude = original.Coordinates.Latitude;
-            //}
+            this.ID = tobject.Id;
+            this.Text = tobject.Text.Replace(",", "");
+            this.Time = tobject.CreatedAt;
+            this.User = tobject.Creator.Name;
+            if (tobject.Coordinates != null)
+            {
+                this.longitude = tobject.Coordinates.Longitude;
+                this.lattitude = tobject.Coordinates.Latitude;
+            }
         }
 
         /// <summary>
@@ -46,5 +46,7 @@ namespace TweetSenseApplication.src.tweet
         {
             return JsonConvert.SerializeObject(line);
         }
+
+
     }
 }

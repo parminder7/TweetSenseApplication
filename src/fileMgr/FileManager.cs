@@ -6,8 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using TweetSenseApplication.src.twitter;
 
-namespace TweetSenseApplication.src.tweet
+namespace TweetSenseApplication.src.fileMgr
 {
     class FileManager
     {
