@@ -22,6 +22,12 @@ namespace TweetSenseApplication.src.twitter
 {
     class newStreamTweet
     {
+        //member variables
+        private static string _accessToken = "";
+        private static string _accessTokenSecret = "";
+        private static string _consumerKey = "";
+        private static string _consumerSecret = "";
+        
         /// <summary>
         /// The method streams the real time tweets containing the given keyword
         /// The tweets should be in english language and contain geolocation
@@ -29,27 +35,36 @@ namespace TweetSenseApplication.src.twitter
         /// <param name="keyword"></param>
         public static void tweetStreamer(string keyword)
         {
-            var stream = Stream.CreateFilteredStream();
-            ICoordinates coordinates1 = new Coordinates(-180, -90);
-            ICoordinates coordinates2 = new Coordinates(180, 90);
-            ILocation location = new Location(coordinates1, coordinates2);
+            _accessToken = ConfigurationManager.AppSettings["token_AccessToken"];
+            _accessTokenSecret = ConfigurationManager.AppSettings["token_AccessTokenSecret"];
+            _consumerKey = ConfigurationManager.AppSettings["token_ConsumerKey"];
+            _consumerSecret = ConfigurationManager.AppSettings["token_ConsumerSecret"];
 
-            stream.AddLocation(location);
-            stream.AddTrack(keyword);
-            stream.AddTweetLanguageFilter(Language.English);
-
-            stream.MatchingTweetAndLocationReceived += (sender, args) =>
+            var Credentials = TwitterCredentials.CreateCredentials(_accessToken, _accessTokenSecret, _consumerKey, _consumerSecret);
+            TwitterCredentials.ExecuteOperationWithCredentials(Credentials, () =>
             {
-                var tweet = args.Tweet;
-                Console.WriteLine("{0} {1} was detected ", tweet.Id, tweet.Text);
+                var stream = Stream.CreateFilteredStream();
+                ICoordinates coordinates1 = new Coordinates(-180, -90);
+                ICoordinates coordinates2 = new Coordinates(180, 90);
+                ILocation location = new Location(coordinates1, coordinates2);
 
-                //IEnumerable<ILocation> matchingLocations = args.MatchedLocations;
+                stream.AddLocation(location);
+                stream.AddTrack("obama");
+                stream.AddTweetLanguageFilter(Language.English);
 
-                processATweet(tweet);
-                //Console.WriteLine("Text: "+ tweet.Text);
-            };
+                stream.MatchingTweetAndLocationReceived += (sender, args) =>
+                {
+                    var tweet = args.Tweet;
+                    Console.WriteLine("{0} {1} was detected ", tweet.Id, tweet.Text);
 
-            stream.StartStreamMatchingAllConditions();
+                    //IEnumerable<ILocation> matchingLocations = args.MatchedLocations;
+
+                    processATweet(tweet, keyword);
+                    //Console.WriteLine("Text: "+ tweet.Text);
+                };
+
+                stream.StartStreamMatchingAllConditions();
+            });
         }
 
         /// <summary>
@@ -58,7 +73,7 @@ namespace TweetSenseApplication.src.twitter
         /// It saves the tweet in a file.
         /// </summary>
         /// <param name="tweet"></param>
-        public static void processATweet(ITweet tweet)
+        public static void processATweet(ITweet tweet, string filename)
         {
             //foreach (var matchingLocation in matchingLocations)
             //{
@@ -69,7 +84,7 @@ namespace TweetSenseApplication.src.twitter
             var atweet = new Tweet(tweet);
             downloadedTweets.Add(atweet);
             var encodedTweets = FileManager.Serializer(downloadedTweets);
-            var file = FileManager.GetFileName("worldcup");
+            var file = FileManager.GetFileName(filename);
             FileManager.Writer(encodedTweets, file);
         }
         

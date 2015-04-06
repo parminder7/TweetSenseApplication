@@ -182,3 +182,4 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 src/common/App.config
+app.config

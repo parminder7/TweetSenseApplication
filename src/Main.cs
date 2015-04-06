@@ -18,14 +18,18 @@ namespace TweetSenseApplication
             Console.WriteLine("Credential OK!");
 
             //Get the tweets
-            var otweets = StreamTweet.GetTweetsWithKeyword("worldcup");
+            //var otweets = StreamTweet.GetTweetsWithKeyword("worldcup");
 
             //Encode each tweet and add them to the list
-            var encodedTweets = FileManager.Serializer(otweets);
+            //var encodedTweets = FileManager.Serializer(otweets);
 
             //Put the tweets in file
-            var file = FileManager.GetFileName("worldcup");
-            FileManager.Writer(encodedTweets, file);
+            //var file = FileManager.GetFileName("worldcup");
+            //FileManager.Writer(encodedTweets, file);
+
+            newStreamTweet.tweetStreamer("obama");
+
+            Console.ReadKey();
         }
     }
 }
