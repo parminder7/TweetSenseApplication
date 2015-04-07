@@ -43,14 +43,18 @@ namespace TweetSenseApplication.src.fileMgr
         /// </summary>
         /// <param name="TweetList"></param>
         /// <param name="file"></param>
-        public static void Writer(List<string> TweetList, string file)
+        public static void Writer(List<Tweet> TweetList, string file)
         {
             var writer = new StreamWriter(file, true);
             if (TweetList != null && TweetList.Count() > 0)
             {
                 foreach (var tweet in TweetList)
                 {
-                    writer.WriteLine(tweet);
+                    writer.WriteLine("ID::"+ tweet.ID + "\t" 
+                        + "Text::"+ tweet.Text + "\t" 
+                        + "Time::"+ tweet.Time + "\t"
+                        + "Lattitude::"+ tweet.lattitude + "\t" 
+                        + "Longitude::"+ tweet.longitude);
                 }
             }
             writer.Close();

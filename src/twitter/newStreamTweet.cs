@@ -49,7 +49,7 @@ namespace TweetSenseApplication.src.twitter
                 ILocation location = new Location(coordinates1, coordinates2);
 
                 stream.AddLocation(location);
-                stream.AddTrack("obama");
+                stream.AddTrack(keyword);
                 stream.AddTweetLanguageFilter(Language.English);
 
                 stream.MatchingTweetAndLocationReceived += (sender, args) =>
@@ -83,9 +83,9 @@ namespace TweetSenseApplication.src.twitter
             var downloadedTweets = new List<Tweet>();
             var atweet = new Tweet(tweet);
             downloadedTweets.Add(atweet);
-            var encodedTweets = FileManager.Serializer(downloadedTweets);
+            //var encodedTweets = FileManager.Serializer(downloadedTweets);
             var file = FileManager.GetFileName(filename);
-            FileManager.Writer(encodedTweets, file);
+            FileManager.Writer(downloadedTweets, file);
         }
         
     }

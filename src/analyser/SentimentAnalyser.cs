@@ -24,8 +24,10 @@ namespace TweetSenseApplication.src.analyser
         //    var jarRoot = @"..\..\..\..\paket-files\nlp.stanford.edu\stanford-parser-full-2015-01-30\models\";
         //    var modelsDirectory = jarRoot + @"\edu\stanford\nlp\models";
             //var modelsDirectory = @"\edu\stanford\nlp\models";
-        
-            var jarRoot = @"..\..\src\stanford-corenlp\";
+
+            var jarRoot = @"E:\SONCHIRDI_STUDY_MATERIAL\MSS_TEXTBOOKS\Term4-Text books\TWITTER_SentimentAnalysis\TweetSenseApplication\TweetSenseApplication\src\stanford-corenlp\";
+            //var jarRoot = @"..\..\src\stanford-corenlp\";
+            
             //var modelsDirectory = jarRoot + @"\edu\stanford\nlp\models";            
             // Loading english PCFG parser from file
             //var lp = LexicalizedParser.loadModel(modelsDirectory + @"\lexparser\englishPCFG.ser.gz");

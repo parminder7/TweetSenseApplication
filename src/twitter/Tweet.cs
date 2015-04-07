@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,6 +48,31 @@ namespace TweetSenseApplication.src.twitter
             return JsonConvert.SerializeObject(line);
         }
 
+        /// <summary>
+        /// This method deserialize the string to Tweet object
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        public static Tweet Deserializer(string line)
+        {
+            //Tweet decodedTweet = JsonConvert.DeserializeObject<Tweet>(line);
+            //return decodedTweet;
 
+            Dictionary<string, string> decodedTweet = new Dictionary<string,string>();
+            decodedTweet = line.Split('\t').Select(
+                x => x.Split(new string[] { "::" }, StringSplitOptions.None))
+                .ToDictionary(x => x[0], x => x[1]);
+
+            Tweet tweet = new Tweet();
+            tweet.ID = Convert.ToInt64(decodedTweet["ID"]);
+            tweet.Text = decodedTweet["Text"];
+            string timeFormat = "yyyy-MM-dd h:mm:ss tt";
+            Console.WriteLine(decodedTweet["Time"]);
+            tweet.Time = DateTime.ParseExact(decodedTweet["Time"], timeFormat, CultureInfo.InvariantCulture);
+            //tweet.Time = Convert.ToDateTime(decodedTweet["Time"]);
+            tweet.lattitude = Convert.ToDouble(decodedTweet["Lattitude"]);
+            tweet.longitude = Convert.ToDouble(decodedTweet["Longitude"]);
+            return tweet;
+        }
     }
 }
