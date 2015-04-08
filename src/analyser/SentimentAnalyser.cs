@@ -25,38 +25,41 @@ namespace TweetSenseApplication.src.analyser
         //    var modelsDirectory = jarRoot + @"\edu\stanford\nlp\models";
             //var modelsDirectory = @"\edu\stanford\nlp\models";
 
-            var jarRoot = @"E:\SONCHIRDI_STUDY_MATERIAL\MSS_TEXTBOOKS\Term4-Text books\TWITTER_SentimentAnalysis\TweetSenseApplication\TweetSenseApplication\src\stanford-corenlp\";
-            //var jarRoot = @"..\..\src\stanford-corenlp\";
+            var jarRoot = @"..\..\src\stanford-corenlp\";
             
             //var modelsDirectory = jarRoot + @"\edu\stanford\nlp\models";            
             // Loading english PCFG parser from file
             //var lp = LexicalizedParser.loadModel(modelsDirectory + @"\lexparser\englishPCFG.ser.gz");
-
-            Properties prop = new Properties();
-            prop.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
-
-            var curDir = Environment.CurrentDirectory;
-            System.IO.Directory.SetCurrentDirectory(jarRoot);
-            
-            StanfordCoreNLP pipeline = new StanfordCoreNLP(prop);
-            System.IO.Directory.SetCurrentDirectory(curDir);
-
-            String[] polarity = { "Very Negative", "Negative", "Neutral", "Positive", "Very Positive" };
-            int score = 0; 
-
-            if ((line != null) && (line.Length > 0))
+            //try
             {
-                Annotation annotation = new Annotation(line);
-                pipeline.annotate(annotation);
+                Properties prop = new Properties();
+                prop.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
 
-                foreach (CoreMap sent in (dynamic)annotation.get(new CoreAnnotations.SentencesAnnotation().getClass()))
+                var curDir = Environment.CurrentDirectory;
+                System.IO.Directory.SetCurrentDirectory(jarRoot);
+
+                StanfordCoreNLP pipeline = new StanfordCoreNLP(prop);
+                System.IO.Directory.SetCurrentDirectory(curDir);
+
+                String[] polarity = { "Very Negative", "Negative", "Neutral", "Positive", "Very Positive" };
+                int score = 0;
+
+                if ((line != null) && (line.Length > 0))
                 {
-                    Tree tree = (Tree)sent.get(new SentimentCoreAnnotations.AnnotatedTree().getClass());
-                    score = RNNCoreAnnotations.getPredictedClass(tree);
-                    //Console.WriteLine("The polarity of the satement is "+polarity[score]);
+                    Annotation annotation = new Annotation(line);
+                    pipeline.annotate(annotation);
+
+                    foreach (CoreMap sent in (dynamic)annotation.get(new CoreAnnotations.SentencesAnnotation().getClass()))
+                    {
+                        Tree tree = (Tree)sent.get(new SentimentCoreAnnotations.AnnotatedTree().getClass());
+                        score = RNNCoreAnnotations.getPredictedClass(tree);
+                        //Console.WriteLine("The polarity of the satement is "+polarity[score]);
+                    }
                 }
+                return polarity[score];
             }
-            return polarity[score];
+            //catch { return "nothing"; }
+            
         }
     }
 }

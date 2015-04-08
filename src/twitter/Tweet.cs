@@ -62,17 +62,21 @@ namespace TweetSenseApplication.src.twitter
             decodedTweet = line.Split('\t').Select(
                 x => x.Split(new string[] { "::" }, StringSplitOptions.None))
                 .ToDictionary(x => x[0], x => x[1]);
-
-            Tweet tweet = new Tweet();
-            tweet.ID = Convert.ToInt64(decodedTweet["ID"]);
-            tweet.Text = decodedTweet["Text"];
-            string timeFormat = "yyyy-MM-dd h:mm:ss tt";
-            Console.WriteLine(decodedTweet["Time"]);
-            tweet.Time = DateTime.ParseExact(decodedTweet["Time"], timeFormat, CultureInfo.InvariantCulture);
-            //tweet.Time = Convert.ToDateTime(decodedTweet["Time"]);
-            tweet.lattitude = Convert.ToDouble(decodedTweet["Lattitude"]);
-            tweet.longitude = Convert.ToDouble(decodedTweet["Longitude"]);
-            return tweet;
+            try
+            {
+                Tweet tweet = new Tweet();
+                tweet.ID = Convert.ToInt64(decodedTweet["ID"]);
+                tweet.Text = decodedTweet["Text"];
+                string timeFormat = "yyyy-MM-dd h:mm:ss tt";
+                Console.WriteLine(decodedTweet["Time"]);
+                tweet.Time = DateTime.ParseExact(decodedTweet["Time"], timeFormat, CultureInfo.InvariantCulture);
+                //tweet.Time = Convert.ToDateTime(decodedTweet["Time"]);
+                tweet.lattitude = Convert.ToDouble(decodedTweet["Lattitude"]);
+                tweet.longitude = Convert.ToDouble(decodedTweet["Longitude"]);
+                return tweet;
+            }
+            catch { return null; }
+            
         }
     }
 }

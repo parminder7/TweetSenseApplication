@@ -43,7 +43,7 @@ namespace TweetSenseApplication.src.reverseGeoCoding
                 }
                 return null;
             }
-            catch (XmlException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return null;

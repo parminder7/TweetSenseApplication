@@ -14,7 +14,7 @@ namespace TweetSenseApplication.src.mapreduce
     {
         public override void Map(String line, MapperContext context)
         {
-            Console.WriteLine(line);
+            //context.Log(string.Format("Mapper: Input- {0}", line));
             Tweet atweet = Tweet.Deserializer(line);
             string polarity = SentimentAnalyser.findSentiment(atweet.Text);
 
@@ -25,10 +25,11 @@ namespace TweetSenseApplication.src.mapreduce
 
             if (year == 2015 || year == 2014)
             {
-                context.IncrementCounter("HitMissProgress", "TweetOfRecentYearFound", 1);
+                //context.IncrementCounter("HitMissProgress", "TweetOfRecentYearFound", 1);
+              //  context.Log(string.Format("Emitting- {0} | {1}", country, polarity));
                 context.EmitKeyValue(country, polarity);
             }
-            context.IncrementCounter("HitMissProgress", "TweetOfRecentYearNOTFound", 1);
+            //context.IncrementCounter("HitMissProgress", "TweetOfRecentYearNOTFound", 1);
         }
     }
 }
